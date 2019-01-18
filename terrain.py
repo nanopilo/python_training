@@ -1,10 +1,13 @@
 from lettuce import before, world, after
 from selenium import webdriver
+from features.pages.home import HomePage
+from features.pages.search_results import SearchResultsPage
 
 
 @before.all
 def open_shop():
     open_drivers()
+    prepare_pages(world.driver)
 
 
 @after.all
@@ -21,6 +24,11 @@ def open_drivers():
 
 def get_chrome():
     return webdriver.Chrome('./chromedriver')
+
+
+def prepare_pages(driver):
+    world.home = HomePage(driver)
+    world.search = SearchResultsPage(driver)
 
 
 def close_drivers():
